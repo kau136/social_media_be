@@ -1,9 +1,9 @@
 const path = require('path');
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
+require('dotenv').config();
 
 const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
@@ -60,9 +60,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    'mongodb+srv://hkkaushik:8954745517@cluster0.bbvpu.mongodb.net/sociallll?retryWrites=true&w=majority'
-  )
+  .connect(process.env.MONGO_URL)
   .then(result => {
     const server = app.listen(8080,()=>{console.log("Connected!!!!!!!!!!!!!!!!!!!!")});
     const io = require('./socket').init(server);
